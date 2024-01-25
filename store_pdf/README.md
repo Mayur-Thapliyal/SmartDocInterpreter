@@ -1,0 +1,1 @@
+This folder stores the PDF provided by the user
