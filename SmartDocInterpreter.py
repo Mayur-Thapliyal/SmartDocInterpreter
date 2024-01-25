@@ -26,7 +26,7 @@ def clear_submit():
 def download_file(uploaded_file):
     file_exists = exists(os.path.join("./store_pdf",uploaded_file.name))
     if not file_exists:
-        with open(os.path.join("./",uploaded_file.name),"wb") as f: 
+        with open(os.path.join("./store_pdf",uploaded_file.name),"wb") as f: 
             f.write(uploaded_file.getbuffer())  
             return True
     return False
@@ -51,6 +51,7 @@ with st.sidebar:
         help="Only PDF files are supported", 
         on_change=clear_submit)
     if uploaded_file:
+        delete_files_in_directory("./store_pdf")
         is_file_downloaded = download_file(uploaded_file)
         print("file downloaded", is_file_downloaded)
 
@@ -73,7 +74,6 @@ if uploaded_file:
             st.info("Answer")
             try:
                 get_answers_from_pdf(uploaded_file,question,OpenAI_SECRET_KEY)
-                delete_files_in_directory("./store_pdf")
             except Exception as e:
                 st.write(f"debug message = {str(e)}")
             
